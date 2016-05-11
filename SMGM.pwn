@@ -370,26 +370,13 @@ public GM_Cycle()
 
 public GM_StartMap(modeid)
 {
-	new str[20];
-	format(str,sizeof(str),"maphandler_Start",mode_name[modeid],ModeInfo[modeid][Map]);
-
 	CallRemoteFunction("maphandler_Start","ii",modeid,ModeInfo[modeid][Map]);
-	/*for(new i=0;i<MAX_PLAYERS;i++)
-	{
-	    if(IsPlayerConnected(i)) CallRemoteFunction("maphandler_Start","ii",modeid,ModeInfo[modeid][Map]);
-	}*/
 	return 1;
 }
 
 public GM_EndMap(modeid)
 {
-	new str[20];
-
-	format(str,sizeof(str),"End%s%i",mode_name[modeid],ModeInfo[modeid][Map]);
-	for(new i=0;i<MAX_PLAYERS;i++)
-	{
-	    if(IsPlayerConnected(i)) CallRemoteFunction(str,"i",i);
-	}
+	CallRemoteFunction("maphandler_End","i",modeid);
 	
 	//define next map
 	ModeInfo[modeid][Map] = (ModeInfo[modeid][Map] == MAX_MAPS[modeid])? (1) : (ModeInfo[modeid][Map]+1);
