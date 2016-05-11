@@ -370,25 +370,13 @@ public GM_Cycle()
 
 public GM_StartMap(modeid)
 {
-	new str[20];
-	format(str,sizeof(str),"Start%s%i",mode_name[modeid],ModeInfo[modeid][Map]);
-
-	for(new i=0;i<MAX_PLAYERS;i++)
-	{
-	    if(IsPlayerConnected(i)) CallRemoteFunction(str,"i",i);
-	}
+	CallRemoteFunction("maphandler_Start","ii",modeid,ModeInfo[modeid][Map]);
 	return 1;
 }
 
 public GM_EndMap(modeid)
 {
-	new str[20];
-
-	format(str,sizeof(str),"End%s%i",mode_name[modeid],ModeInfo[modeid][Map]);
-	for(new i=0;i<MAX_PLAYERS;i++)
-	{
-	    if(IsPlayerConnected(i)) CallRemoteFunction(str,"i",i);
-	}
+	CallRemoteFunction("maphandler_End","i",modeid);
 	
 	//define next map
 	ModeInfo[modeid][Map] = (ModeInfo[modeid][Map] == MAX_MAPS[modeid])? (1) : (ModeInfo[modeid][Map]+1);
@@ -417,7 +405,6 @@ public GM_NextMode(lastmode)
 
 public GM_StartMode(modeid)
 {
-	//CallRemoteFunction("GetMapData","iiii",ModeInfo[modeid][Map],modeid,ModeInfo[modeid][Interior],ModeInfo[modeid][Time]);
 	ModeInfo[modeid][Time] = 300;
 	new str[200];
 	format(str,sizeof(str),"[MODE]A new %s will start in 45 Seconds!",FullModeName[modeid]);
@@ -429,6 +416,7 @@ public GM_StartMode(modeid)
 	SendRconCommand(modestr);
 	format(modestr,sizeof(modestr),"%s_SubmitCurrentMap",mode_name[modeid]);
 	CallRemoteFunction(modestr,"i",ModeInfo[modeid][Map]);
+
 
 	SetTimerEx("GM_Countdown",42000,false,"ii",modeid,3);
 	SetTimerEx("GM_Countdown",43000,false,"ii",modeid,2);
