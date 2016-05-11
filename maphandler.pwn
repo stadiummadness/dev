@@ -57,7 +57,7 @@ public maphandler_Start(modeid,mapid)
 	
 	//CreateDynamicObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, worldid = -1, interiorid = -1, playerid = -1, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, STREAMER_TAG_AREA areaid = STREAMER_TAG_AREA -1);
 	new str[128],mapname[24];
-	format(mapname,sizeof(mapname),"%s%i",FullModeName[modeid],mapid);
+	format(mapname,sizeof(mapname),"%s%i.txt",FullModeName[modeid],mapid);
 	
 	new File:handle = fopen(mapname, io_read);
 	
